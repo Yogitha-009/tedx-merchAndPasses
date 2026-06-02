@@ -3,12 +3,11 @@ import React, { useState } from "react";
 
 type ProductContainerProps = {
     product: Product;
+    increment: (id: number) => void;
+    decrement: (id: number) => void;
 };
 
-export default function ProductContainer({ product }: ProductContainerProps) {
-    const [quantity, setQuantity] = useState(0);
-    const increment = () => setQuantity((prev) => prev + 1);
-    const decrement = () => setQuantity((prev) => Math.max(0, prev - 1));
+export default function ProductContainer({ product, increment, decrement }: ProductContainerProps) {
 
     return (
         <div className="flex flex-col md:flex-row gap-4 p-4">
@@ -22,9 +21,9 @@ export default function ProductContainer({ product }: ProductContainerProps) {
                 <div className="flex justify-between mt-2">
                     <button>Details</button>
                     <div className="flex border gap-2 w-16 justify-around items-center">
-                        <button onClick={decrement}>-</button>
-                        <h1>{quantity}</h1>
-                        <button onClick={increment}>+</button>
+                        <button onClick={()=>decrement(product.id)}>-</button>
+                        <h1>{product.quantity}</h1>
+                        <button onClick={()=>increment(product.id)}>+</button>
                     </div>
                 </div>
             </div>

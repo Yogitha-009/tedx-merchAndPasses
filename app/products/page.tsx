@@ -1,9 +1,14 @@
 'use client';
 
 import ProductSheet from "@/components/products/productSheet";
-import mockProducts from "@/lib/mock/mockProducts";
+import Product from "@/types/product";
+type ProductContainerProps = {
+    products: Product[];
+    increment: (id: number) => void;
+    decrement: (id: number) => void;
+};
 
-export default function Products() {    
+export default function Products({ products, increment, decrement }: ProductContainerProps) {    
     return (
         <div>
             
@@ -21,7 +26,7 @@ export default function Products() {
                 tracking-[1.2px]
                 ">Secure your passage and acquire essential artifacts for the journey into the unknown.All items are logged in the central archive</p>
                 {/* Render the list of products here. */}
-                <ProductSheet/>
+                <ProductSheet products={products} increment={increment} decrement={decrement} />
             </div>
         </div>
     );

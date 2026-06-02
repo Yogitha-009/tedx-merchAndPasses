@@ -1,12 +1,26 @@
-
-import mockProducts from "@/lib/mock/mockProducts";
 import ProductContainer from "./productContainer";
+import Product from "@/types/product";
 
-export default function ProductSheet() {
+type ProductSheetProps = {
+    products: Product[];
+    increment: (id: number) => void;
+    decrement: (id: number) => void;
+};
+
+export default function ProductSheet({
+    products,
+    increment,
+    decrement,
+}: ProductSheetProps) {
     return (
         <div>
-            {mockProducts.map((product) => (
-                <ProductContainer key={product.id} product={product} />
+            {products.map((product) => (
+                <ProductContainer
+                    key={product.id}
+                    product={product}
+                    increment={increment}
+                    decrement={decrement}
+                />
             ))}
         </div>
     );

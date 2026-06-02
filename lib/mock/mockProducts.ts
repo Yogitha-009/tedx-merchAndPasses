@@ -6,6 +6,7 @@ const mockProducts: Product[] = [
     price: 150.00,
     description: "Access to the morning expedition talks and the main archive hall.",
     imageUrl: "/Session1Pass.png",
+    quantity: 0
   },
   {
     id: 2,
@@ -13,6 +14,7 @@ const mockProducts: Product[] = [
     price: 350.00,
     description: "Full access to all sessions, workshops, and the evening symposium.",
     imageUrl: "/CompleteManifestPass.png",
+    quantity: 0
   },
   {
     id: 3,
@@ -22,6 +24,7 @@ const mockProducts: Product[] = [
     imageUrl: "/T-Shirt.png",
     variant:"White",
     size: "M",
+    quantity: 0
   },
   {
     id: 4,
@@ -29,7 +32,8 @@ const mockProducts: Product[] = [
     price: 25.00,
     description: "Durable canvas carry-all for field notes and collected artifacts.",
     imageUrl: "/ToteBag.png",
-    variant:"White"
+    variant:"White",
+    quantity: 0
   },
   {
     id: 5,
@@ -37,6 +41,7 @@ const mockProducts: Product[] = [
     price: 15.00,
     description: "Three enamel pins detailing the events geographical markers.",
     imageUrl: "/CoordinatePinSet.png",
+    quantity: 0
   }];
 
 export default mockProducts;

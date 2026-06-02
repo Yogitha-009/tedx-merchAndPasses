@@ -1,0 +1,20 @@
+{
+  "style": "default",
+  "path": "components/modern-ui",
+  "theme": "default",
+  "typescript": true,
+  "tailwind": true,
+  "framework": "next",
+  "components": [
+    {
+      "name": "stepper",
+      "version": "latest",
+      "installedAt": "2026-06-01T16:08:27.209Z"
+    }
+  ],
+  "aliases": {
+    "cn": "@/lib/utils",
+    "hook": "@/hooks"
+  },
+  "tailwindVersion": "v4"
+}

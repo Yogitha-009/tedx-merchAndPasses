@@ -6,6 +6,7 @@ interface Product {
   imageUrl: string;
   variant?: string;
   size?:"S" | "M" | "L" | "XL";
+  quantity:0| number;
 }
 
 export default Product;
