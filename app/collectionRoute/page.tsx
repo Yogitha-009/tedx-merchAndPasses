@@ -22,6 +22,7 @@ import { useForm } from "react-hook-form";
 import router from "next/dist/shared/lib/router/router";
 import { CheckoutCoordinatesData } from "@/lib/validations/checkoutCoordinatesSchema";
 import { useRouter } from "next/dist/client/components/navigation";
+import { div } from "motion/react-m";
 
 export default function CollectionRoute() {
     const steps = [
@@ -50,108 +51,382 @@ const onSubmit = (data: CollectionRouteData) => {
 const router = useRouter();
 const selectedHostel = watch("hostel");
     return (
-        <div>
-            <form onSubmit={handleSubmit(onSubmit)}>
-            <nav className="
-            w-full
-            flex
-            items-center
-            justify-between
-            px-4 md:px-6 lg:px-8
-            py-4 md:py-6
-            border-b
-            border-stone-300/60
-            bg-[#F9F8F6]
-            ">
-                <div className="flex gap-2 md:gap-3 lg:gap-4">
-                <img src="/Icon.svg" alt="icon" height={20} width={20}/>
-                <div>
-                    <p className="
-                    uppercase 
-                    font-light
-                    text-[#79716B]
-                    font-weight-400
-                    leading-4
-                    tracking-[2px]
-                    font-size-10
-                    ">checkout protocol</p>
-                    <h1 className="
-                    text-[#171717]
-                    font-size-18
-                    tracking-[0.45px]
-                    leading-7
-                    font-weight-500
-                    font-semibold
-                    ">Identify Explorer</h1>
-                </div>
-                </div>
-                <div className="flex gap-1">
-                    <Link href="/"><X></X></Link>
-                    <p className="
-                    uppercase
-                    ">abort</p>
-                </div>
-            </nav>
+        // <div>
+        //     <form onSubmit={handleSubmit(onSubmit)}>
+        //     <nav className="
+        //     w-full
+        //     flex
+        //     items-center
+        //     justify-between
+        //     px-4 md:px-6 lg:px-8
+        //     py-4 md:py-6
+        //     border-b
+        //     border-stone-300/60
+        //     bg-[#F9F8F6]
+        //     ">
+        //         <div className="flex gap-2 md:gap-3 lg:gap-4">
+        //         <img src="/Icon.svg" alt="icon" height={20} width={20}/>
+        //         <div>
+        //             <p className="
+        //             uppercase 
+        //             font-light
+        //             text-[#79716B]
+        //             font-weight-400
+        //             leading-4
+        //             tracking-[2px]
+        //             font-size-10
+        //             ">checkout protocol</p>
+        //             <h1 className="
+        //             text-[#171717]
+        //             font-size-18
+        //             tracking-[0.45px]
+        //             leading-7
+        //             font-weight-500
+        //             font-semibold
+        //             ">Identify Explorer</h1>
+        //         </div>
+        //         </div>
+        //         <div className="flex gap-1">
+        //             <Link href="/"><X></X></Link>
+        //             <p className="
+        //             uppercase
+        //             ">abort</p>
+        //         </div>
+        //     </nav>
 
-            <div>
-            <h1>Collection Route</h1>
-            <p>Designate the drop point for your artifacts and passes.</p>
-            </div>
+        //     <div>
+        //     <h1>Collection Route</h1>
+        //     <p>Designate the drop point for your artifacts and passes.</p>
+        //     </div>
 
-            <Tabs
-            defaultValue="inCampus"
-            onValueChange={(value) =>setValue(
-            "routeType",
-            value as "inCampus" | "outCampus",
-            { shouldValidate: true }
-            )}>
-            <TabsList>
-            <Building></Building>
-            <TabsTrigger value="inCampus">In Campus</TabsTrigger>
-            <House></House>
-            <TabsTrigger value="outCampus">Out of Campus</TabsTrigger>
-            </TabsList>
-            <TabsContent value="inCampus">
-                <p>Hostel Selector</p>
-                <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                <Button variant="outline">{selectedHostel || "Select Hostel"}</Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                    <DropdownMenuGroup>
-                        <DropdownMenuItem onClick={()=>setValue("hostel","C.V Raman",{shouldValidate:true})}>C.V Raman</DropdownMenuItem>
-                        <DropdownMenuItem onClick={()=>setValue("hostel","Aryabhatta boys hostel",{shouldValidate:true})}>Aryabhatta boys hostel</DropdownMenuItem>
-                        <DropdownMenuItem onClick={()=>setValue("hostel","Aryabhatta girls hostel",{shouldValidate:true})}>Aryabhatta girls hostel</DropdownMenuItem>
-                        <DropdownMenuItem onClick={()=>setValue("hostel","Asima",{shouldValidate:true})}>Asima</DropdownMenuItem>
-                        <DropdownMenuItem onClick={()=>setValue("hostel","Kalam",{shouldValidate:true})}>Kalam</DropdownMenuItem>
-                    </DropdownMenuGroup>
-                </DropdownMenuContent>
-            </DropdownMenu>
-            <p className="text-red-500 text-sm mt-1">{errors.hostel?.message}</p>
-            <p>Room/Coodinate</p>
-            <UnderlineInput placeholder="e.g. A-304" {...register("roomCoordinate")} />
-            <p>Collection Notes(Optional)</p>
-            <UnderlineInput placeholder="e.g. Leave at reception etc." {...register("collectionNotes")}  />
-            </TabsContent>
-            <TabsContent value="outCampus">
-                <p>Address</p>
-                <UnderlineInput placeholder="e.g. 123, Main Street, City, Country" {...register("address")}  />
-                <p>Postal Code</p>
-                <UnderlineInput placeholder="e.g. 123456" {...register("postalCode")} />
-                <p>Collection Notes(Optional)</p>
-                <UnderlineInput placeholder="e.g. Leave at reception etc." {...register("collectionNotes")}     />
-            </TabsContent>
-            </Tabs>
-            <div>
-                <Link href="/checkoutCoordinates">BACK</Link>
-                <button type="submit"  disabled={!isValid} className={`px-4 py-2 rounded ${isValid
-                ? "bg-black text-white"
-                : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                }`}>Continue
-            </button>
-            </div>
-            </form>
-            <div><Stepper steps={steps} activeStep={1} orientation="vertical" /></div>
+        //     <Tabs
+        //     defaultValue="inCampus"
+        //     onValueChange={(value) =>setValue(
+        //     "routeType",
+        //     value as "inCampus" | "outCampus",
+        //     { shouldValidate: true }
+        //     )}>
+        //     <TabsList>
+        //     <Building></Building>
+        //     <TabsTrigger value="inCampus">In Campus</TabsTrigger>
+        //     <House></House>
+        //     <TabsTrigger value="outCampus">Out of Campus</TabsTrigger>
+        //     </TabsList>
+        //     <TabsContent value="inCampus">
+        //         <p>Hostel Selector</p>
+        //         <DropdownMenu>
+        //         <DropdownMenuTrigger asChild>
+        //         <Button variant="outline">{selectedHostel || "Select Hostel"}</Button>
+        //         </DropdownMenuTrigger>
+        //         <DropdownMenuContent>
+        //             <DropdownMenuGroup>
+        //                 <DropdownMenuItem onClick={()=>setValue("hostel","C.V Raman",{shouldValidate:true})}>C.V Raman</DropdownMenuItem>
+        //                 <DropdownMenuItem onClick={()=>setValue("hostel","Aryabhatta boys hostel",{shouldValidate:true})}>Aryabhatta boys hostel</DropdownMenuItem>
+        //                 <DropdownMenuItem onClick={()=>setValue("hostel","Aryabhatta girls hostel",{shouldValidate:true})}>Aryabhatta girls hostel</DropdownMenuItem>
+        //                 <DropdownMenuItem onClick={()=>setValue("hostel","Asima",{shouldValidate:true})}>Asima</DropdownMenuItem>
+        //                 <DropdownMenuItem onClick={()=>setValue("hostel","Kalam",{shouldValidate:true})}>Kalam</DropdownMenuItem>
+        //             </DropdownMenuGroup>
+        //         </DropdownMenuContent>
+        //     </DropdownMenu>
+        //     <p className="text-red-500 text-sm mt-1">{errors.hostel?.message}</p>
+        //     <p>Room/Coodinate</p>
+        //     <UnderlineInput placeholder="e.g. A-304" {...register("roomCoordinate")} />
+        //     <p>Collection Notes(Optional)</p>
+        //     <UnderlineInput placeholder="e.g. Leave at reception etc." {...register("collectionNotes")}  />
+        //     </TabsContent>
+        //     <TabsContent value="outCampus">
+        //         <p>Address</p>
+        //         <UnderlineInput placeholder="e.g. 123, Main Street, City, Country" {...register("address")}  />
+        //         <p>Postal Code</p>
+        //         <UnderlineInput placeholder="e.g. 123456" {...register("postalCode")} />
+        //         <p>Collection Notes(Optional)</p>
+        //         <UnderlineInput placeholder="e.g. Leave at reception etc." {...register("collectionNotes")}     />
+        //     </TabsContent>
+        //     </Tabs>
+        //     <div>
+        //         <Link href="/checkoutCoordinates">BACK</Link>
+        //         <button type="submit"  disabled={!isValid} className={`px-4 py-2 rounded ${isValid
+        //         ? "bg-black text-white"
+        //         : "bg-gray-300 text-gray-500 cursor-not-allowed"
+        //         }`}>Continue
+        //     </button>
+        //     </div>
+        //     </form>
+        //     <div><Stepper steps={steps} activeStep={1} orientation="vertical" /></div>
+        // </div>
+
+
+
+
+        
+        <div className="min-h-screen bg-[#F5F5F4] flex items-center justify-center p-4">
+        <div className="w-full max-w-5xl bg-[#F9F8F6] border border-stone-200 shadow-xl">
+
+        {/* Header */}
+        <nav className="flex items-center justify-between px-6 py-5 border-b border-stone-200">
+        <div className="flex items-center gap-3">
+          <img
+            src="/Icon.svg"
+            alt="icon"
+            className="w-8 h-8"
+          />
+
+          <div>
+            <p className="uppercase tracking-[2px] text-[10px] text-stone-500">
+              Checkout Protocol
+            </p>
+
+            <h1 className="text-lg font-medium text-stone-900">
+              Delivery Route
+            </h1>
+          </div>
         </div>
+
+        <Link
+          href="/"
+          className="flex items-center gap-2 uppercase text-[10px] tracking-[2px] text-stone-500"
+        >
+          <X size={14} />
+          Abort
+        </Link>
+      </nav>
+
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex flex-col lg:flex-row">
+
+          {/* Sidebar */}
+          <div className="lg:w-55 border-r border-stone-200 p-6">
+            <p className="uppercase tracking-[2px] text-[10px] text-stone-400 mb-6">
+              Progress
+            </p>
+
+            <Stepper
+              steps={steps}
+              activeStep={1}
+              orientation="vertical"
+            />
+
+            <div className="mt-12 border border-stone-200 p-4 text-[11px] text-stone-500 leading-5">
+              Encryption active.
+              <br />
+              Transmission secure.
+              <br />
+              Terra Incognita Server.
+            </div>
+          </div>
+
+          {/* Main Content */}
+          <div className="flex-1 p-8 md:p-12">
+            <h1 className="text-3xl font-medium text-stone-900 mb-2">
+              Collection Route
+            </h1>
+
+            <p className="text-stone-500 mb-8">
+              Designate the drop point for your artifacts and passes.
+            </p>
+
+            {/* Tabs */}
+            <Tabs
+              defaultValue="inCampus"
+              onValueChange={(value) =>
+                setValue(
+                  "routeType",
+                  value as "inCampus" | "outCampus",
+                  { shouldValidate: true }
+                )
+              }
+            >
+              <TabsList className="grid grid-cols-2 w-full max-w-md mb-8">
+                <TabsTrigger
+                  value="inCampus"
+                  className="flex items-center gap-2"
+                >
+                  <Building size={16} />
+                  In Campus
+                </TabsTrigger>
+
+                <TabsTrigger
+                  value="outCampus"
+                  className="flex items-center gap-2"
+                >
+                  <House size={16} />
+                  Out of Campus
+                </TabsTrigger>
+              </TabsList>
+
+              {/* In Campus */}
+              <TabsContent value="inCampus" className="space-y-6">
+                <div>
+                  <label className="uppercase tracking-[2px] text-[10px] text-stone-500">
+                    Hostel Selector
+                  </label>
+
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className="w-full mt-2 justify-between"
+                      >
+                        {selectedHostel || "Select Hostel"}
+                      </Button>
+                    </DropdownMenuTrigger>
+
+                    <DropdownMenuContent className="w-72">
+                      <DropdownMenuGroup>
+                        <DropdownMenuItem
+                          onClick={() =>
+                            setValue(
+                              "hostel",
+                              "C.V Raman",
+                              { shouldValidate: true }
+                            )
+                          }
+                        >
+                          C.V Raman
+                        </DropdownMenuItem>
+
+                        <DropdownMenuItem
+                          onClick={() =>
+                            setValue(
+                              "hostel",
+                              "Aryabhatta boys hostel",
+                              { shouldValidate: true }
+                            )
+                          }
+                        >
+                          Aryabhatta boys hostel
+                        </DropdownMenuItem>
+
+                        <DropdownMenuItem
+                          onClick={() =>
+                            setValue(
+                              "hostel",
+                              "Aryabhatta girls hostel",
+                              { shouldValidate: true }
+                            )
+                          }
+                        >
+                          Aryabhatta girls hostel
+                        </DropdownMenuItem>
+
+                        <DropdownMenuItem
+                          onClick={() =>
+                            setValue(
+                              "hostel",
+                              "Asima",
+                              { shouldValidate: true }
+                            )
+                          }
+                        >
+                          Asima
+                        </DropdownMenuItem>
+
+                        <DropdownMenuItem
+                          onClick={() =>
+                            setValue(
+                              "hostel",
+                              "Kalam",
+                              { shouldValidate: true }
+                            )
+                          }
+                        >
+                          Kalam
+                        </DropdownMenuItem>
+                      </DropdownMenuGroup>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.hostel?.message}
+                  </p>
+                </div>
+
+                <div>
+                  <label className="uppercase tracking-[2px] text-[10px] text-stone-500">
+                    Room / Coordinate
+                  </label>
+
+                  <UnderlineInput
+                    placeholder="e.g. A-304"
+                    {...register("roomCoordinate")}
+                  />
+                </div>
+
+                <div>
+                  <label className="uppercase tracking-[2px] text-[10px] text-stone-500">
+                    Collection Notes (Optional)
+                  </label>
+
+                  <UnderlineInput
+                    placeholder="Leave at reception, etc."
+                    {...register("collectionNotes")}
+                  />
+                </div>
+              </TabsContent>
+
+              {/* Out Campus */}
+              <TabsContent value="outCampus" className="space-y-6">
+                <div>
+                  <label className="uppercase tracking-[2px] text-[10px] text-stone-500">
+                    Address
+                  </label>
+
+                  <UnderlineInput
+                    placeholder="123 Main Street"
+                    {...register("address")}
+                  />
+                </div>
+
+                <div>
+                  <label className="uppercase tracking-[2px] text-[10px] text-stone-500">
+                    Postal Code
+                  </label>
+
+                  <UnderlineInput
+                    placeholder="560001"
+                    {...register("postalCode")}
+                  />
+                </div>
+
+                <div>
+                  <label className="uppercase tracking-[2px] text-[10px] text-stone-500">
+                    Collection Notes (Optional)
+                  </label>
+
+                  <UnderlineInput
+                    placeholder="Leave at reception, etc."
+                    {...register("collectionNotes")}
+                  />
+                </div>
+              </TabsContent>
+            </Tabs>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="border-t border-stone-200 px-6 py-4 flex justify-between items-center">
+          <Link
+            href="/checkoutCoordinates"
+            className="uppercase text-[11px] tracking-[2px] text-stone-500"
+          >
+            ← Back
+          </Link>
+
+          <button
+            type="submit"
+            disabled={!isValid}
+            className={`px-8 py-3 uppercase tracking-[2px] text-[11px]
+            ${
+              isValid
+                ? "bg-stone-800 text-white"
+                : "bg-stone-300 text-stone-500 cursor-not-allowed"
+            }`}
+          >
+            Continue →
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
     );
 }
