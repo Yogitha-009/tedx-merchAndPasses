@@ -1,6 +1,6 @@
 export default function Navbar() {
   return (
-    <nav className="navbar bg-amber-50 px-4 md:px-8 lg:px-16 flex w-full h-4 sm:h-6 md:h-8 lg:h-12 xl:h-16 items-center justify-between">
+    <nav className="navbar bg-[#F9F8F6] px-4 md:px-8 lg:px-16 flex w-full h-4 sm:h-6 md:h-8 lg:h-12 xl:h-16 items-center justify-between">
         <div className="flex gap-1 md:gap-2 lg:gap-4">
             <img className="w-5 h-5" src="/globe.svg" alt="Globe"/>
             <div className="
