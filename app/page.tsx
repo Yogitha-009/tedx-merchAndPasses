@@ -1,10 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-
+import CartSidebar from '@/components/cart/cartSidebar';
 import Navbar from '@/components/layout/Navbar';
 import Products from './products/page';
-import CartSidebar from './cartSidebar/page';
 
 import Product from '@/types/product';
 import { CartItem } from '@/types/cart';
