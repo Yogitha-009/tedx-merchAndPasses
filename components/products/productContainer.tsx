@@ -3,8 +3,8 @@ import React, { useState } from "react";
 
 type ProductContainerProps = {
     product: Product;
-    increment: (id: number) => void;
-    decrement: (id: number) => void;
+    increment: (id: string) => void;
+    decrement: (id: string) => void;
 };
 
 export default function ProductContainer({ product, increment, decrement }: ProductContainerProps) {
@@ -21,9 +21,9 @@ export default function ProductContainer({ product, increment, decrement }: Prod
                 <div className="flex justify-between mt-2">
                     <button>Details</button>
                     <div className="flex border gap-2 w-16 justify-around items-center">
-                        <button onClick={()=>decrement(product.id)}>-</button>
+                        <button onClick={()=>decrement(product._id)}>-</button>
                         <h1>{product.quantity}</h1>
-                        <button onClick={()=>increment(product.id)}>+</button>
+                        <button onClick={()=>increment(product._id)}>+</button>
                     </div>
                 </div>
             </div>

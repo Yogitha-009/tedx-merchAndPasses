@@ -4,8 +4,8 @@ import ProductSheet from "@/components/products/productSheet";
 import Product from "@/types/product";
 type ProductContainerProps = {
     products: Product[];
-    increment: (id: number) => void;
-    decrement: (id: number) => void;
+    increment: (id: string) => void;
+    decrement: (id: string) => void;
 };
 
 export default function Products({ products, increment, decrement }: ProductContainerProps) {    

@@ -3,8 +3,8 @@ import Product from "@/types/product";
 
 type ProductSheetProps = {
     products: Product[];
-    increment: (id: number) => void;
-    decrement: (id: number) => void;
+    increment: (id: string) => void;
+    decrement: (id: string) => void;
 };
 
 export default function ProductSheet({
@@ -16,7 +16,7 @@ export default function ProductSheet({
         <div>
             {products.map((product) => (
                 <ProductContainer
-                    key={product.id}
+                    key={product._id}
                     product={product}
                     increment={increment}
                     decrement={decrement}
