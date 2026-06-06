@@ -7,11 +7,9 @@ import Products from './products/page';
 import fetchProducts from '@/lib/mock/mockProducts';
 import Product from '@/types/product';
 import { CartItem } from '@/types/cart';
-import { q } from 'motion/react-client';
-
 
 export default function Home() {
-  const dummyUserId="66b1f4a9c8d3e7f123456789"
+  
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
 
@@ -64,89 +62,37 @@ export default function Home() {
     setCartItems(items);
   }, [products]);
 
-// get cart products from backend
-async function getCart(){
-  const response=await fetch("http://localhost:5001/cart?:dummyUserId")
-  const data=await response.json();
-  console.log(data)
-}
 
-
-// add new product to cart
-  async function setcartProducts(product: Product) {
-    const response= await fetch(
-      "http://localhost:5001/cart/add",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: "66b1f4a9c8d3e7f123456789",
-          productId: product._id,
-          quantity: product.quantity,
-          productType: product.type,
-          selectedSize: product.size,
-        })
-      }
+  const increment = (id: string) => {
+    setProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product._id === id
+          ? {
+              ...product,
+              quantity: product.quantity + 1,
+            }
+          : product
+      )
     );
+  };
 
-    if (!response.ok) {
-      throw new Error("Failed to save cart products");
-    }
-    else {console.log("Cart products saved successfully");
-    }
-  }
+  const decrement = (id: string) => {
+    setProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product._id === id
+          ? {
+              ...product,
+              quantity: Math.max(
+                0,
+                product.quantity - 1
+              ),
+            }
+          : product
+      )
+    );
+  };
 
-// update cart products whenever cartItems change
-async function updateCart(product: Product) {
-  const response= await fetch(
-    'http://localhost:5001/cart/update',
-    {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId: "66b1f4a9c8d3e7f123456789",
-        productId: product._id,
-        quantity: product.quantity
-        })
-      }
-  );
-
-  if (!response.ok) {
-    throw new Error("Failed to update cart products");
-  }
-  else {
-    console.log("Cart products updated successfully");
-  }
-}
-
-  // const increment = (product:Product) => {
-  //   const cart=getCart();
-  //   const cartitems=cart.data.items;
-  //   cartitems.map(item:cartItems)=>
-  //     item._id ===products._id
-  //   ?{updateCart(item)}
-  //   :{setcartProducts(item)}
-  // };
-
-  // const decrement = (id: string) => {
-  //   setProducts((prevProducts) =>
-  //     prevProducts.map((product) =>
-  //       product._id === id
-  //         ? {
-  //             ...product,
-  //             quantity: Math.max(
-  //               0,
-  //               product.quantity - 1
-  //             ),
-  //           }
-  //         : product
-  //     )
-  //   );
-  // };
+  
 
   return (
     <div className="min-h-screen bg-[#F9F8F6]">

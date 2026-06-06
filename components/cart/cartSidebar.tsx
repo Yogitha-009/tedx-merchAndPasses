@@ -87,7 +87,7 @@ export default function CartSidebar({
           <div className="space-y-4">
             {cartItems.map((item) => (
               <div
-                key={item.product.id}
+                key={item.product._id}
                 className="
                 border-b
                 border-stone-100
