@@ -1,21 +1,31 @@
 'use client';
 
-import { CartItem } from "@/types/cart";
+import { Cart, CartItem } from "@/types/cart";
+import Product from "@/types/product";
 import { useRouter } from "next/navigation";
+import { Trash } from "lucide-react";
 
 type CartSidebarProps = {
-  cartItems: CartItem[];
+  cart: Cart;
+  products: Product[];
+  deleteCart: () => Promise<void>;
 };
 
 export default function CartSidebar({
-  cartItems,
+  cart,
+  products,
+  deleteCart,
 }: CartSidebarProps) {
   const router = useRouter();
 
   const continueCheckout = () => {
-    if (cartItems.length > 0) {
+    if (cart.items.length > 0) {
       router.push("/checkoutCoordinates");
     }
+  };
+
+  const getProduct = (productId: string) => {
+    return products.find((p) => p._id === productId);
   };
 
   return (
@@ -46,12 +56,14 @@ export default function CartSidebar({
         <h2 className="mt-2 font-medium text-stone-900">
           Selected Coordinates
         </h2>
+        <button onClick={deleteCart}><Trash></Trash></button>
       </div>
 
       {/* Body */}
       <div className="p-5 min-h-65">
-        {cartItems.length === 0 ? (
-          <div className="
+        {cart.items.length === 0 ? (
+          <div
+            className="
             flex
             flex-col
             items-center
@@ -60,7 +72,8 @@ export default function CartSidebar({
             py-12
             "
           >
-            <div className="
+            <div
+              className="
               w-12
               h-12
               rounded-full
@@ -85,34 +98,59 @@ export default function CartSidebar({
           </div>
         ) : (
           <div className="space-y-4">
-            {cartItems.map((item) => (
-              <div
-                key={item.product._id}
-                className="
-                border-b
-                border-stone-100
-                pb-3
-                "
-              >
-                <h3 className="font-medium text-sm">
-                  {item.product.title}
-                </h3>
+            {cart.items.map((item: CartItem) => {
+              const product = getProduct(item.productId);
 
-                <div className="flex justify-between mt-1">
-                  <span className="text-xs text-stone-500">
-                    Qty {item.quantity}
-                  </span>
+              return (
+                <div
+                  key={item.productId}
+                  className="
+                  border-b
+                  border-stone-100
+                  pb-3
+                  "
+                >
+                  <h3 className="font-medium text-sm">
+                    {product?.name ?? "Unknown Product"}
+                  </h3>
 
-                  <span className="text-sm">
-                    $
-                    {(
-                      item.quantity *
-                      item.product.price
-                    ).toFixed(2)}
-                  </span>
+                  <div className="flex justify-between mt-1">
+                    <span className="text-xs text-stone-500">
+                      Qty {item.quantity}
+                    </span>
+
+                    <span className="text-sm">
+                      ₹
+                      {(
+                        item.quantity *
+                        item.priceAtPurchase
+                      ).toFixed(2)}
+                    </span>
+                  </div>
                 </div>
+              );
+            })}
+
+            {/* Subtotal */}
+            <div className="pt-2">
+              <div className="flex justify-between text-sm">
+                <span className="text-stone-500">
+                  Subtotal
+                </span>
+
+                <span>
+                  ₹{cart.subtotal.toFixed(2)}
+                </span>
               </div>
-            ))}
+
+              <div className="flex justify-between mt-2 font-medium">
+                <span>Total</span>
+
+                <span>
+                  ₹{cart.total.toFixed(2)}
+                </span>
+              </div>
+            </div>
           </div>
         )}
       </div>
@@ -121,7 +159,7 @@ export default function CartSidebar({
       <div className="border-t border-stone-200 p-5">
         <button
           onClick={continueCheckout}
-          disabled={cartItems.length === 0}
+          disabled={cart.items.length === 0}
           className={`
           w-full
           py-3
@@ -131,7 +169,7 @@ export default function CartSidebar({
           transition
 
           ${
-            cartItems.length > 0
+            cart.items.length > 0
               ? "bg-[#171717] text-white"
               : "bg-stone-200 text-stone-400 cursor-not-allowed"
           }

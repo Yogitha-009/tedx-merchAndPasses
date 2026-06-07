@@ -1,14 +1,17 @@
-import Product from "./product"
+import Product from "./product";
 
 export interface CartItem {
-    product: Product;
+    productId:string;
     quantity: number;
+    selectedSize?:"S"|"M"|"L"|"XL";
+    priceAtPurchase:number;
+    productType?:"MERCH"|"TICKET"
 }
 
 export interface Cart{
+    userId:string;
     items: CartItem[];
     subtotal: number;
-    discount: number;
-    platformFee?: number;
-    totalPrice: number;
+    total: number;
+    status?:"PENDING"|"DONE";
 }

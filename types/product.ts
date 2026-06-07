@@ -1,7 +1,7 @@
 interface Product {
   _id: string;
-  title: string;
-  slug?: string;
+  name: string;
+  slug: string;
   type?: string;
   price: number;
   currency?: string;
